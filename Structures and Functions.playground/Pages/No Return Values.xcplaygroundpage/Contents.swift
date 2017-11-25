@@ -16,7 +16,7 @@ import Foundation
  
  Say we want to greet a person. We could define the following function:
  
- ![example](example2.png "example")
+ ![example](example5.png "example")
  
  Type the code that you see above. Then run the playground to try it out.
  */
@@ -53,11 +53,11 @@ greet(person: "Max Planck")
 /*:
  By encapsulating behaviour of a program inside a function, it is easier to maintain.
  
- Say you are very pleased to see your friend Dave and your other five friends.
+ Say you are very pleased to see your friend Sara and your other five friends.
  
  *Modify* the behaviour of the function you defined above, so that when invoked, it says:
  
-     Hello, Dave! A sincere pleasure to meet you on this very fine day.
+     Hello, Sara! A sincere pleasure to meet you on this very fine day.
  
  Now run your playground again.
  
