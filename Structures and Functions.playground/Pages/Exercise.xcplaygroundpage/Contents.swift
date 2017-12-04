@@ -34,38 +34,105 @@ import Foundation
 
 // Begin here... once you teach the computer to do this, you will never need to do it by hand again! :)
 
-struct Point {
-    var x : Double = 6.0
-    var y : Double = 1.5
+public struct Point {
+    var x : Double = 0.0
+    var y : Double = 0.0
 }
 
-var cabinSite = Point(x: 5, y: 5)
+var cabinSite = Point(x: 6, y: 1.5)
 
 
-struct Slope {
+public struct Slope {
     var rise : Double = 1.0
     var run : Double = 1.0
 }
 
-struct Line {
-    var slope : Slope = Slope(rise: 1.0, run: 1.0)
+public struct Line {
+    var slope : Slope = Slope(rise: 3.0, run: 4.0)
     var verticalIntercept : Double = 0.0
 }
 
 
 
-var slopeOfTheExistingRoad = Slope(rise: -1, run: 2)
-var daRealRoad = Line(slope: slopeOfTheExistingRoad, verticalIntercept: 9.5)
+var slopeOfTheExistingRoad = Slope(rise: -4, run: 8)
+var existingRoad = Line(slope: slopeOfTheExistingRoad, verticalIntercept: 9.5)
 
-func getSlopeOfPerpendicularLine(from givenLine: Line) -> Slope {
+public func getSlopeOfPerpendicularLine(from givenLine: Line) -> Slope {
     return Slope (rise: givenLine.slope.run, run: givenLine.slope.rise * -1)
     
 }
 
+let perpendicularLinesSlope = getSlopeOfPerpendicularLine(from: existingRoad)
 
 
-let perpendicularLine = getSlopeOfPerpendicularLine(from: daRealRoad)
-print(perpendicularLine)
+
+
+
+public func getVerticalIntercept(from p: Point, onLineWIth m: Slope) -> Double {
+    
+    
+    let mAsDecimal = m.rise/m.run
+    
+    return p.y - mAsDecimal * p.x
+    
+    
+}
+
+let perpendicularLineVerticalIntercept = getVerticalIntercept(from: cabinSite, onLineWIth: perpendicularLinesSlope)
+
+let newRoad = Line(slope:perpendicularLinesSlope, verticalIntercept: perpendicularLineVerticalIntercept)
+
+public func getPointOfIntersection(between first: Line, and second: Line) -> Point{
+    
+    let verticalInterceptDifference = first.verticalIntercept - second.verticalIntercept
+    
+    
+    let slopeDifference = second.slope.rise/second.slope.run - first.slope.rise/first.slope.run
+    
+    let x = verticalInterceptDifference/slopeDifference
+    
+    let y =  first.slope.rise/first.slope.run * x + first.verticalIntercept
+    
+    
+    
+    
+    return Point(x: x, y: y)
+}
+
+
+getPointOfIntersection(between: existingRoad, and: newRoad)
+
+
+func distance(from: Point, to: Point) -> Double{
+    
+    return sqrt( pow(from.x - to.x, 2) + pow(to.y - from.y, 2))
+}
+
+
+
+let distance = sqrt(pow(cabinSite.x - 8, 2) + pow(cabinSite.y - 5.5, 2))
+
+print(distance)
+
+func shortestDistance(from providedPoint: Point, to providedLine: Line) -> Double{
+    let perpendicularLineVerticalIntercept = getVerticalIntercept(from: providedPoint, onLineWIth: perpendicularLinesSlope)
+    let newLine = Line(slope: perpendicularLinesSlope, verticalIntercept: perpendicularLineVerticalIntercept)
+    
+    let pointOfIntersection = getPointOfIntersection(between: providedLine, and: newLine)
+    
+    let shortestDistance = distance(from: providedPoint, to: pointOfIntersection)
+    return shortestDistance
+}
+
+var cabinSite = Point(x: 6, y: 1.5)
+
+var slopeOfExistingRoad = Slope(rise: -1, run: 2)
+
+var existingRoad = Line(slope: slopeOfExistingRoad, verticalIntercept: 9.5)
+
+
+
+shortestDistance(from: cabinSite, to: existingRoad)
 
 
 
